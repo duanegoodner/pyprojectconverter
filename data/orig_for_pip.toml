@@ -34,10 +34,8 @@ build-backend = "setuptools.build_meta"
 pythonpath = "src"
 addopts = "--cov=src/docktuna --cov-branch --cov-report term --cov-report xml"
 
-
 [tool.coverage.xml]
 output = "coverage.xml"
-
 
 [tool.black]
 line-length = 79

@@ -9,3 +9,5 @@ __pycache__/
 # PyCharm / IntelliJ
 .idea/
 *.iml
+
+data/converted_toml_files/

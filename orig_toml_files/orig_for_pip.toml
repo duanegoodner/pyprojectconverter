@@ -27,8 +27,8 @@ dev = [
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-packages = { find = { where = ["src"] } }
+[tool.setuptools.packages.find]
+packages = where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = "src"

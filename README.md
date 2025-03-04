@@ -3,7 +3,7 @@
 *A simple utility to convert between Poetry and pip `pyproject.toml` formats.*
 
 
-## Installation & Setup
+## 📥 Installation & Setup
 
 ### Clone the repository and navigate to the project directory
 ```shell
@@ -11,11 +11,11 @@ git clone https://github.com/duanegoodner/pyprojectconverter
 cd pyprojectconverter
 ```
 
-## Usage
+## ⚡ Usage
 
-### Convert from pip format to Poetry format
+### 🔄 Convert from pip format to Poetry format
 
-#### Command Line Help
+#### 📌 Command Line Help
 Run:
 ```shell
 python pyprojectconverter/pip_to_poetry.py --help
@@ -34,7 +34,7 @@ optional arguments:
                         Path to save the converted Poetry-compatible pyproject.toml file.
 ```
 
-#### Example Conversion
+#### ⚙️ Example Conversion
 
 Convert a pip-style `pyproject.toml` to Poetry format:
 ```shell
@@ -47,9 +47,9 @@ Expected output:
 
 Now, compare `converted_to_poetry.toml` with `data/orig_for_poetry.toml`. The structure may be reordered, but the content should be equivalent.
 
-### Convert from Poetry format to pip format
+### 🔁 Convert from Poetry format to pip format
 
-#### Command Line Help
+#### 📌 Command Line Help
 Run:
 ```shell
 python pyprojectconverter/poetry_to_pip.py --help
@@ -68,7 +68,7 @@ optional arguments:
                         Path to save the converted pip-compatible pyproject.toml file.
 ```
 
-#### Example Conversion
+#### ⚙️ Example Conversion
 
 Run:
 ```shell
@@ -81,11 +81,11 @@ Expected Output:
 
 Now, compare `converted_to_pip.toml` with `data/orig_for_pip.toml`. The structure may be reordered, but the content should be equivalent.
 
-## Notes
+## ℹ️ Notes
 
-The script does not modify the original file. Instead, it saves the converted version to the specified output path.
-Converted files may have different section ordering but retain the same content.
-Supports both dependency conversion and source layout detection (src-based or flat layouts).
+- The script does not modify the original file. Instead, it saves the converted version to the specified output path.
+- Converted files may have different section ordering but retain the same content.
+- Supports both dependency conversion and source layout detection (src-based or flat layouts).
 
 
 

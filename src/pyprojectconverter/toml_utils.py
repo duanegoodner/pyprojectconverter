@@ -19,5 +19,6 @@ def format_list_multiline(items: list) -> tomlkit.items.Array:
 
 def write_to_pyproject_toml(metadata: dict, path: Path):
     """Writes the converted metadata to a new TOML file with proper formatting."""
+    path.parent.mkdir(parents=True, exist_ok=True)
     with path.open(mode="w") as f:
         tomlkit.dump(metadata, f)

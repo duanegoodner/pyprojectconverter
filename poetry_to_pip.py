@@ -1,5 +1,6 @@
 from pathlib import Path
 import tomlkit
+import argparse
 
 
 def get_toml_doc(path: Path) -> tomlkit.TOMLDocument:
@@ -106,16 +107,20 @@ def write_to_pyproject_toml(pip_metadata: dict, path: Path):
         tomlkit.dump(pip_metadata, f)
 
 
-def main(poetry_toml_path: Path, new_pip_toml_path: Path):
+def main():
     """Converts a Poetry-based pyproject.toml to a pip-compatible version."""
-    toml_doc = get_toml_doc(path=poetry_toml_path)
+    parser = argparse.ArgumentParser(description="Convert Poetry pyproject.toml to pip-compatible format.")
+    parser.add_argument("input", type=Path, help="Path to the Poetry pyproject.toml file.")
+    parser.add_argument("output", type=Path, help="Path to save the converted pip-compatible pyproject.toml file.")
+    args = parser.parse_args()
+
+    toml_doc = get_toml_doc(path=args.input)
     poetry_metadata = toml_doc["tool"]["poetry"]
     pip_metadata = create_pip_metadata(poetry_metadata=poetry_metadata, original_toml=toml_doc)
-    write_to_pyproject_toml(pip_metadata=pip_metadata, path=new_pip_toml_path)
+    write_to_pyproject_toml(pip_metadata=pip_metadata, path=args.output)
+
+    print(f"✅ Successfully converted {args.input} to {args.output}!")
 
 
 if __name__ == "__main__":
-    main(
-        poetry_toml_path=Path("orig_toml_files") / "orig_for_poetry.toml",
-        new_pip_toml_path=Path("converted_toml_files") / "converted_to_pip.toml",
-    )
+    main()

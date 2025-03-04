@@ -1,16 +1,15 @@
 
 [tool.poetry]
-name = "docktuna"
+name = "mypackage"
 version = "0.1.0"
-description = "Tools for a using Optuna with RDB storage in a fully containerized environment"
-authors = ["Duane Goodner <dmgoodner@gmail.com>"]
+description = "Dummy project to demonstrate pyprojectconverter"
+authors = ["Some Programmer <someprogrammer@gmail.com>"]
 license = "MIT"
 include = ["license"]
-#packages = [{include = "docktuna", from = "src"}]
 package-mode = true
 
 [[tool.poetry.packages]]
-include = "docktuna"
+include = "mypackage"
 from = "src"
 
 [tool.poetry.dependencies]

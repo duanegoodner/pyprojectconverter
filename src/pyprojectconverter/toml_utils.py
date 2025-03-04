@@ -1,6 +1,7 @@
 import tomlkit
 from pathlib import Path
 
+
 def get_toml_doc(path: Path) -> tomlkit.TOMLDocument:
     """Reads a TOML file and returns its parsed document."""
     with path.open(mode="r") as f:

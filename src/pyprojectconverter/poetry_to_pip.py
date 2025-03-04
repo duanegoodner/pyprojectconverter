@@ -5,12 +5,6 @@ import toml_utils as tu
 import tomlkit
 
 
-# def get_toml_doc(path: Path) -> tomlkit.TOMLDocument:
-#     """Reads a TOML file and returns its parsed document."""
-#     with path.open(mode="r") as f:
-#         return tomlkit.loads(f.read())
-
-
 def convert_version(poetry_version: str) -> str:
     """
     Converts Poetry-style versions to pip-compatible versions:
@@ -43,7 +37,9 @@ def get_dev_dependencies(poetry_metadata: dict) -> list:
     if "group" in poetry_metadata and "dev" in poetry_metadata["group"]:
         return [
             f"{pkg}{convert_version(ver)}"
-            for pkg, ver in poetry_metadata["group"]["dev"]["dependencies"].items()
+            for pkg, ver in poetry_metadata["group"]["dev"][
+                "dependencies"
+            ].items()
         ]
     return []
 
@@ -51,20 +47,18 @@ def get_dev_dependencies(poetry_metadata: dict) -> list:
 def get_packages(poetry_metadata: dict) -> dict:
     """Extracts package discovery settings for setuptools if using src layout."""
     if "packages" in poetry_metadata:
-        return {"find": {"where": [entry["from"]] for entry in poetry_metadata["packages"]}}
+        return {
+            "find": {
+                "where": [entry["from"]]
+                for entry in poetry_metadata["packages"]
+            }
+        }
     return {"find": {}}
 
 
-# def format_list_multiline(items: list) -> tomlkit.items.Array:
-#     """Formats list items to appear on multiple lines in TOML output."""
-#     arr = tomlkit.array()
-#     for item in items:
-#         arr.append(item)
-#     arr.multiline(True)
-#     return arr
-
-
-def create_pip_metadata(poetry_metadata: dict, original_toml: tomlkit.TOMLDocument) -> dict:
+def create_pip_metadata(
+    poetry_metadata: dict, original_toml: tomlkit.TOMLDocument
+) -> dict:
     """Creates a pip-compatible project metadata structure while retaining all tool settings."""
     dependencies = get_dependencies(poetry_metadata)
     dev_dependencies = get_dev_dependencies(poetry_metadata)
@@ -103,26 +97,36 @@ def create_pip_metadata(poetry_metadata: dict, original_toml: tomlkit.TOMLDocume
     return pip_metadata
 
 
-# def write_to_pyproject_toml(pip_metadata: dict, path: Path):
-#     """Writes the converted metadata to a new TOML file with proper formatting."""
-#     with path.open(mode="w") as f:
-#         tomlkit.dump(pip_metadata, f)
-
-
 def main():
     """Converts a Poetry-based pyproject.toml to a pip-compatible version."""
-    parser = argparse.ArgumentParser(description="Convert Poetry pyproject.toml to pip-compatible format.")
-    parser.add_argument("-i", "--input", type=Path, required=True, help="Path to the Poetry pyproject.toml file.")
-    parser.add_argument("-o", "--output", type=Path, required=True,
-                        help="Path to save the converted pip-compatible pyproject.toml file.")
+    parser = argparse.ArgumentParser(
+        description="Convert Poetry pyproject.toml to pip-compatible format."
+    )
+    parser.add_argument(
+        "-i",
+        "--input",
+        type=Path,
+        required=True,
+        help="Path to the Poetry pyproject.toml file.",
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        type=Path,
+        required=True,
+        help="Path to save the converted pip-compatible pyproject.toml file.",
+    )
     args = parser.parse_args()
 
     toml_doc = tu.get_toml_doc(path=args.input)
     poetry_metadata = toml_doc["tool"]["poetry"]
-    pip_metadata = create_pip_metadata(poetry_metadata=poetry_metadata, original_toml=toml_doc)
+    pip_metadata = create_pip_metadata(
+        poetry_metadata=poetry_metadata, original_toml=toml_doc
+    )
     tu.write_to_pyproject_toml(metadata=pip_metadata, path=args.output)
 
     print(f"✅ Successfully converted {args.input} to {args.output}!")
+
 
 if __name__ == "__main__":
     main()

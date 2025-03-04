@@ -1,6 +1,7 @@
-from pathlib import Path
-import tomlkit
 import argparse
+from pathlib import Path
+
+import tomlkit
 
 
 def get_toml_doc(path: Path) -> tomlkit.TOMLDocument:
@@ -110,8 +111,9 @@ def write_to_pyproject_toml(pip_metadata: dict, path: Path):
 def main():
     """Converts a Poetry-based pyproject.toml to a pip-compatible version."""
     parser = argparse.ArgumentParser(description="Convert Poetry pyproject.toml to pip-compatible format.")
-    parser.add_argument("input", type=Path, help="Path to the Poetry pyproject.toml file.")
-    parser.add_argument("output", type=Path, help="Path to save the converted pip-compatible pyproject.toml file.")
+    parser.add_argument("-i", "--input", type=Path, required=True, help="Path to the Poetry pyproject.toml file.")
+    parser.add_argument("-o", "--output", type=Path, required=True,
+                        help="Path to save the converted pip-compatible pyproject.toml file.")
     args = parser.parse_args()
 
     toml_doc = get_toml_doc(path=args.input)
@@ -120,7 +122,6 @@ def main():
     write_to_pyproject_toml(pip_metadata=pip_metadata, path=args.output)
 
     print(f"✅ Successfully converted {args.input} to {args.output}!")
-
 
 if __name__ == "__main__":
     main()

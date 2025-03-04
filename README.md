@@ -1,24 +1,26 @@
 # pyprojectconverter
 
-Utility for converting between pyproject.toml formats for poetry and pip
+*A simple utility to convert between Poetry and pip `pyproject.toml` formats.*
 
 
-## Usage
+## Installation & Setup
 
-### Clone the project and change directory
+### Clone the repository and navigate to the project directory
 ```shell
 git clone https://github.com/duanegoodner/pyprojectconverter
 cd pyprojectconverter
 ```
 
-### Converting from Pip Format to Poetry Format
+## Usage
+
+### Convert from pip format to Poetry format
 
 #### Command Line Help
 Run:
 ```shell
 python pyprojectconverter/pip_to_poetry.py --help
 ```
-Output:
+Expected output:
 ```shell
 usage: pip_to_poetry.py [-h] -i INPUT -o OUTPUT
 
@@ -32,27 +34,27 @@ optional arguments:
                         Path to save the converted Poetry-compatible pyproject.toml file.
 ```
 
-#### Example
+#### Example Conversion
 
-Run:
+Convert a pip-style `pyproject.toml` to Poetry format:
 ```shell
 python pyprojectconverter/pip_to_poetry.py -i data/orig_for_pip.toml -o converted_to_poetry.toml
 ```
-Output:
+Expected output:
 ```shell
 ✅ Successfully converted data/orig_for_pip.toml to converted_to_poetry.toml!
 ```
 
-Then open file `converted_to_poetry.toml` and compare it to `./data/orig_for_poetry.toml`. Their content should match, but may have different section orders.
+Now, compare `converted_to_poetry.toml` with `data/orig_for_poetry.toml`. The structure may be reordered, but the content should be equivalent.
 
-### Converting from Pip Format to Poetry Format
+### Convert from Poetry format to pip format
 
 #### Command Line Help
 Run:
 ```shell
 python pyprojectconverter/poetry_to_pip.py --help
 ```
-Output:
+Expected output:
 ```shell
 usage: poetry_to_pip.py [-h] -i INPUT -o OUTPUT
 
@@ -66,18 +68,24 @@ optional arguments:
                         Path to save the converted pip-compatible pyproject.toml file.
 ```
 
-#### Example
+#### Example Conversion
 
 Run:
 ```shell
  python pyprojectconverter/poetry_to_pip.py -i data/orig_for_poetry.toml -o converted_to_pip.toml
 ```
-Output:
+Expected Output:
 ```shell
 ✅ Successfully converted data/orig_for_poetry.toml to converted_to_pip.toml!
 ```
 
-The content of `converted_to_pip.toml` should match `./data/orig_for_pip.toml` except for section ordering.
+Now, compare `converted_to_pip.toml` with `data/orig_for_pip.toml`. The structure may be reordered, but the content should be equivalent.
+
+## Notes
+
+The script does not modify the original file. Instead, it saves the converted version to the specified output path.
+Converted files may have different section ordering but retain the same content.
+Supports both dependency conversion and source layout detection (src-based or flat layouts).
 
 
 

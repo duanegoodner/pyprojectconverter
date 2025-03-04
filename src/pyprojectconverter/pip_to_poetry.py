@@ -108,8 +108,22 @@ def create_poetry_metadata(
     return poetry_metadata
 
 
-def main():
+def main(input_path: Path, output_path: Path) -> None:
     """Converts a pip-based pyproject.toml back to a Poetry-compatible version."""
+
+    toml_doc = tu.get_toml_doc(path=input_path)
+    pip_metadata = toml_doc["project"]
+    poetry_metadata = create_poetry_metadata(
+        pip_metadata=pip_metadata, original_toml=toml_doc
+    )
+    tu.write_to_pyproject_toml(metadata=poetry_metadata, path=output_path)
+
+    print(
+        f"✅ Successfully converted {str(input_path)} to {str(output_path)}!"
+    )
+
+
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Convert pip pyproject.toml to Poetry-compatible format."
     )
@@ -128,16 +142,4 @@ def main():
         help="Path to save the converted Poetry-compatible pyproject.toml file.",
     )
     args = parser.parse_args()
-
-    toml_doc = tu.get_toml_doc(path=args.input)
-    pip_metadata = toml_doc["project"]
-    poetry_metadata = create_poetry_metadata(
-        pip_metadata=pip_metadata, original_toml=toml_doc
-    )
-    tu.write_to_pyproject_toml(metadata=poetry_metadata, path=args.output)
-
-    print(f"✅ Successfully converted {args.input} to {args.output}!")
-
-
-if __name__ == "__main__":
-    main()
+    main(input_path=args.input, output_path=args.output)

@@ -1,4 +1,4 @@
-# pyprojectconverter
+# convertpytoml
 
 *A simple utility to convert between Poetry and pip `pyproject.toml` formats.*
 
